@@ -1,5 +1,13 @@
 from django.db import models
 
+
+class Genre(models.Model):
+    genre_id = models.IntegerField()
+    name = models.CharField(max_length=100)
+
 # Create your models here.
 class Movie(models.Model):
-    pass
+    tmdb_id = models.IntegerField(null=True)
+    poster_path = models.TextField(blank=True, null=True)
+    title = models.CharField(null=True,max_length=200)
+    genre_ids = models.ManyToManyField(Genre,related_name='movies')
