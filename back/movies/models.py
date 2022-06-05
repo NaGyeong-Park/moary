@@ -12,4 +12,6 @@ class Movie(models.Model):
     title = models.CharField(null=True,max_length=200)
     genre_ids = models.ManyToManyField(Genre,related_name='movies')
     like_users = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='like_movies')
-
+    
+    def __str__(self):
+        return self.title
