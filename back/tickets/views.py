@@ -28,4 +28,10 @@ def read_or_edit_ticket(request, ticket_pk):
     
     elif request.method == 'DELETE':
         ticket.delete()
-        return Response(status.HTTP_204_NO_CONTENT)
+        return Response(status=status.HTTP_204_NO_CONTENT)
+    
+    elif request.method == 'PUT':
+        serializer = TicketSerializer(ticket, data=request.data, partial=True)
+        if serializer.is_valid(raise_exception=True):
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_200_OK)
