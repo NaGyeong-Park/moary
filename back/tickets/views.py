@@ -19,9 +19,13 @@ def create_or_get_tickets(request):
         return Response(serializer.data)
 
 
-@api_view(['GET', 'POST'])
+@api_view(['GET', 'DELETE', 'PUT'])
 def read_or_edit_ticket(request, ticket_pk):
     ticket = Ticket.objects.get(pk=ticket_pk)
     if request.method == 'GET':
         serializer = TicketSerializer(ticket)
         return Response(serializer.data)
+    
+    elif request.method == 'DELETE':
+        ticket.delete()
+        return Response(status.HTTP_204_NO_CONTENT)
