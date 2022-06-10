@@ -1,7 +1,16 @@
 from rest_framework import serializers
 from .models import Ticket
+from django.contrib.auth import get_user_model
 
-class TicketListSerializer(serializers.ModelSerializer):
+User = get_user_model()
+
+class TicketSerializer(serializers.ModelSerializer):
+    class UserSerializer(serializers.ModelSerializer):
+        class Meta:
+            model = User
+            fields = ('pk', 'username')
+    user = UserSerializer(read_only=True)
+
     class Meta:
         model = Ticket
-        fields = '__all__'
+        fields = ('comment','user',)
