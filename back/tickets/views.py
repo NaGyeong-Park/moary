@@ -14,7 +14,8 @@ def create_or_get_tickets(request):
             serializer.save(user=request.user)
             return Response(serializer.data, status=status.HTTP_200_OK)
     elif request.method == 'GET':
-        tickets = Ticket.objects.all()[::-1]
+        # private = false로 filter 변경 필요
+        tickets = Ticket.objects.filter(private=False)[::-1]
         serializer = TicketSerializer(tickets, many=True)
         return Response(serializer.data)
 
